@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="James Webb Space Telescope Components and Functions">
+    <title>James Webb Space Telescope - Components</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header section with blurred background -->
+    <header>
+        <div class="header-overlay">
+            <h1>James Webb Space Telescope</h1>
+            <p>Explore the cutting-edge components that make up the world’s most powerful space telescope.</p>
+        </div>
+    </header>
+
+    <!-- Main content section with telescope components -->
+    <main>
+        <section class="component">
+            <div class="image-box">
+                <img src="primarymirror.jpg" alt="Primary Mirror">
+            </div>
+            <div class="text-box">
+                <h2>Primary Mirror</h2>
+                <p>The **Primary Mirror** is the centerpiece of JWST. It’s a 6.5-meter segmented mirror made of 18 hexagonal segments. This mirror collects light from distant galaxies and stars, allowing the telescope to see deeper into space than ever before.</p>
+                <p><strong>Importance:</strong> The mirror's size allows for the capture of faint infrared signals from the early universe, helping to study the formation of stars and planets.</p>
+            </div>
+        </section>
+
+        <section class="component">
+            <div class="image-box">
+                <img src="sunsheild.jpg" alt="Sunshield">
+            </div>
+            <div class="text-box">
+                <h2>Sunshield</h2>
+                <p>The **Sunshield** consists of five layers of specially coated materials designed to protect the telescope's optics from the Sun’s heat. It ensures that the sensitive instruments stay cool at about -230°C.</p>
+                <p><strong>Importance:</strong> This cooling is essential to infrared observations, as heat would otherwise interfere with the data collection.</p>
+            </div>
+        </section>
+
+        <section class="component">
+            <div class="image-box">
+                <img src="isim.jpg" alt="Integrated Science Instrument Module">
+            </div>
+            <div class="text-box">
+                <h2>Integrated Science Instrument Module (ISIM)</h2>
+                <p>The **ISIM** holds the four main scientific instruments that capture and analyze the light collected by the primary mirror. It is crucial for imaging and spectroscopy.</p>
+                <p><strong>Importance:</strong> The module enables astronomers to conduct detailed studies of planets, stars, and galaxies in the infrared spectrum.</p>
+            </div>
+        </section>
+
+        <section class="component">
+            <div class="image-box">
+                <img src="secondary-mirror.jpg" alt="Secondary Mirror">
+            </div>
+            <div class="text-box">
+                <h2>Secondary Mirror</h2>
+                <p>The **Secondary Mirror** is smaller and reflects the light from the primary mirror into the telescope's instruments.</p>
+                <p><strong>Importance:</strong> This precise reflection ensures that the data is correctly captured by the sensors for analysis.</p>
+            </div>
+        </section>
+
+        <section class="component">
+            <div class="image-box">
+                <img src="spacecraft-bus.jpg" alt="Spacecraft Bus">
+            </div>
+            <div class="text-box">
+                <h2>Spacecraft Bus</h2>
+                <p>The **Spacecraft Bus** houses the observatory's computing systems, power, communication equipment, and propulsion.</p>
+                <p><strong>Importance:</strong> This subsystem controls the position of the telescope and powers all the onboard instruments, making sure the telescope functions correctly in space.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 James Webb Space Telescope | Made by DeRankSquad</p>
+    </footer>
+</body>
+</html>

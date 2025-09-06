@@ -1,0 +1,350 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0a0e17;
+    color: #e0e0e0;
+    line-height: 1.6;
+    
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Starfield Background */
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: -2;
+}
+
+/* Header Section with Parallax and Blurred Background Image */
+header {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('jwst1.jpeg'); /* Your background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Parallax scrolling */
+    filter: blur(02px); /* Apply the blur only to the background */
+    z-index: -1;
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    z-index: 1;
+    padding: 20px;
+}
+
+.header-overlay h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.header-overlay p {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    text-align: center;
+}
+
+/* Main content */
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.component {
+    display: flex;
+    background-color: #1b2a41;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    transform: scale(1); /* Initial scale */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth zoom in and out */
+}
+
+.component:hover {
+    transform: scale(1.03); /* Zoom in on hover */
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+}
+
+
+/* @keyframes comp {
+    from
+} */
+
+section{
+    transform: translateY(-10px);
+    
+    transition: all 0.3s ease-in-out;
+}
+
+/* .text-box:hover {
+    transform: translateY(-10px);
+    
+    transition: all 0.3s ease-in-out;
+} */
+
+/* Ensure paragraphs start with a smooth transition */
+.text-box p {
+    transition: transform 0.3s ease-in-out; /* Keep this for smoothness */
+}
+
+
+
+
+
+/* Ensure paragraphs start with a smooth transition */
+.text-box p {
+    transition: transform 0.3s ease-in-out; /* Keep this for smoothness */
+}
+
+
+.image-box {
+    flex: 1;
+    background-color: #243b55;
+    padding: 20px;
+}
+/* .image-box:hover{
+    transform: translateY(-10px);
+    
+    transition: all 0.3s ease-in-out;
+    
+
+    
+} */
+.image-box img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.text-box {
+    flex: 2;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.text-box h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #00aaff;
+}
+
+.text-box p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.text-box strong {
+    color: #ffcc00;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #141e30;
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+/* Animation for fade-in effect */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.7s ease-out forwards ;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Component scrolling animation */
+/* .component.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+} */
+
+/* Starfield CSS */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 5s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+.photos {
+    padding: 20px;
+    text-align: center;
+    background-color: #141f31fb;
+    width: 100%;
+}
+
+
+.photo-gallery {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 20px; /* Increased gap for better spacing */
+}
+ 
+.photo-item{
+    width: auto;
+    flex: 0 0 auto;
+}
+
+.photo-item img {
+  
+    height: 435.5px; 
+    object-fit: cover;
+   /* width: 800px; */
+   width: auto;
+
+    
+}
+
+.photo-item p {
+    margin-top: 8px;
+    margin-bottom: 8px  ;
+    font-size: 20px; /* Increased font size for captions */
+    color: #666;
+}
+
+.photos h2{
+    margin-bottom: 10px;
+}
+.title{
+    margin-bottom: 15px;
+}
+.photo-gallery::-webkit-scrollbar {
+    height: 7px; /* Height of the scrollbar */
+}
+
+.photo-gallery::-webkit-scrollbar-thumb {
+    background: #d8d7d767; /* Color of the scrollbar thumb */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.photo-gallery::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color when hovered */
+}
+
+
+
+/* respponsiveness */
+
+
+/* Responsive Styles */
+@media (max-width: 960px) {
+    .header-overlay h1 {
+        font-size: 3rem; /* Smaller title on tablet */
+    }
+
+    .header-overlay p {
+        font-size: 1.25rem; /* Smaller text on tablet */
+    }
+
+    main {
+        padding: 30px 10px; /* Reduced padding */
+    }
+
+    .component {
+        flex-direction: column; /* Stack images and text vertically */
+    }
+
+    .text-box {
+        padding: 20px; /* Adjust padding */
+    }
+
+    .text-box h2 {
+        font-size: 1.5rem; /* Smaller heading */
+    }
+
+    .text-box p {
+        font-size: 1rem; /* Smaller paragraph text */
+    }
+
+    .photo-item img {
+        width: 100%; /* Use full width for smaller screens */
+    }
+
+    .photo-item {
+        width: 100%; /* Take full width of the container */
+    }
+}
+
+@media (max-width: 600px) {
+    .header-overlay h1 {
+        font-size: 2.5rem; /* Even smaller title on mobile */
+    }
+
+    .header-overlay p {
+        font-size: 1rem; /* Smaller text on mobile */
+    }
+
+    .text-box h2 {
+        font-size: 1.25rem; /* Smaller heading */
+    }
+
+    .text-box p {
+        font-size: 0.9rem; /* Smaller paragraph text */
+    }
+
+    footer {
+        font-size: 0.9rem; /* Smaller footer text */
+    }
+
+    .photo-item img {
+        width: 100%; /* Use full width for smaller screens */
+    }
+}

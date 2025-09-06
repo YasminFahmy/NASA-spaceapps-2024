@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <title>James Webb Space Telescope 3D Model</title>
+    <style>
+        body {
+            margin: 0;
+            height: 250vh;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        main {
+            position: absolute;
+            top: 20%;
+            left: 3%;
+            z-index: 3;
+        }
+
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: black;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #details-button {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: linear-gradient(45deg, #0f202796, #203a438f, #2c53648a);
+            border: 2px solid rgba(255, 255, 255, 0.479);
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            z-index: 1;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.4);
+        }
+
+        #details-button:hover {
+            background: linear-gradient(45deg, #243b55, #141e30, #0f2027);
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.8), 0 0 60px rgba(0, 170, 255, 0.6);
+        }
+
+        #arrow-left,
+        #arrow-right {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 10px 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #arrow-left {
+            left: 20px;
+            display: none;
+        }
+
+        #arrow-right {
+            right: 20px;
+        }
+
+        #info-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: linear-gradient(45deg, #0f202796, #203a438f, #2c53648a);
+            border: 2px solid rgba(255, 255, 255, 0.479);
+            border-radius: 10px;
+            text-align: center;
+            z-index: 2;
+            opacity: 0;
+            /* Initially hidden */
+            transition: opacity 0.5s ease;
+        }
+
+        #info-box.visible {
+            opacity: 1;
+            /* Make the box visible when this class is added */
+        }
+
+        canvas {
+            overflow-y: visible !important;
+            height: 100%;
+            position: fixed;
+            pointer-events: none;
+            width: 100%;
+        }
+
+        .components {
+            position: fixed;
+            top: 0%;
+            left: 0;
+            display: none;
+            z-index: 3;
+            color: white;
+            /* width: 300px; */
+            padding: 10px 15px;
+            font-size: 1.3rem;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: linear-gradient(45deg, #0f202796, #203a438f, #2c53648a);
+            border: 2px solid rgba(255, 255, 255, 0.479);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video id="background-video" autoplay loop muted playsinline>
+        <source src="spacev.mp4" type="video/mp4">
+    </video>
+    <a href="index2.html"> <button id="details-button">More Details</button></a>
+
+    <!-- Arrow buttons -->
+    <button id="arrow-left">&lt;</button>
+    <button id="arrow-right">&gt;</button>
+
+    <!-- Info box to display the information -->
+    <div id="info-box" class="hidden">This is the default info text.</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/controls/OrbitControls.js"></script>
+
+    <div id="primarymirror" class="components">
+        <span>
+
+            The Primary Mirror
+        </span>
+    </div>
+    <!-- <div id="sunshield" class="components">
+       <p>The <strong>Sun Shield</strong></p>
+
+    </div> -->
+
+    <script>
+        let scene, camera, renderer, controls, videoTexture, model;
+        let targetRotationY = 0; // Target rotation
+        let currentRotationY = 0; // Current rotation
+        let targetCameraPositionZ = 20; // Target camera Z position
+        let currentCameraPositionZ = 20; // Current camera Z position
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+
+            // Get the video element
+            const video = document.getElementById('background-video');
+            video.play();
+
+            // Create a video texture for the background
+            videoTexture = new THREE.VideoTexture(video);
+            videoTexture.minFilter = THREE.LinearFilter;
+            videoTexture.magFilter = THREE.LinearFilter;
+            videoTexture.format = THREE.RGBFormat;
+
+            // Set the video texture as the scene background
+            scene.background = videoTexture;
+
+            // Set up the camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 20);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+
+            document.body.appendChild(renderer.domElement);
+
+            // Controls for rotating the model
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+            // Load the 3D model (James Webb Space Telescope)
+            const loader = new THREE.GLTFLoader();
+            loader.load('jwst/scene.gltf', (gltf) => {
+                model = gltf.scene;
+                model.position.z = -3; // Set the initial position of the model    
+                model.position.x = 0
+
+                scene.add(model);
+                const totalScroll = 1000; // Total scroll distance for the full rotation
+                const totalRotation = Math.PI * 2; // Total rotation in radians (360 degrees)
+                let currentScroll = 0;
+
+                // Scroll event listener
+                window.addEventListener('scroll', () => {
+                    const scrollTop = Math.abs(document.body.getBoundingClientRect().top);
+                    currentScroll = Math.min(scrollTop, totalScroll); // Cap the scroll at totalScroll
+                    const rotationFactor = (currentScroll / totalScroll) * -totalRotation; // Calculate the rotation factor
+                    model.rotation.x = rotationFactor; // Apply rotation to the model
+                });
+            }, undefined, (error) => {
+                console.error('An error happened:', error);
+            });
+
+            const ambientLight = new THREE.AmbientLight(0x808080, 1.0); // Neutral light
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.3); // Directional light
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            animate();
+        }
+        ///////////////////
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        window.addEventListener('mousemove', onMouseMove, false);
+        //window.addEventListener(mouse.o)
+        function onMouseMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            console.log(intersects.length)
+            if (intersects.length != 0) {
+                const intersectedObject = intersects[0].object;
+                // console.log(intersectedObject);
+                // Highlight or display information about the intersected object
+                console.log('Intersected Object:', intersectedObject.name);
+                let x = document.getElementById('primarymirror');
+                if (intersectedObject.name == 'Object_23') {
+                    x.innerHTML = "Primary Mirror";
+
+                    x.style.display = 'block';
+                }
+                // else{
+                //     document.getElementById('primarymirror').style.display = 'none';
+
+                // }
+                else if (intersectedObject.name == 'Object_32' || intersectedObject.name == 'Object_33' || intersectedObject.name == 'Object_34' || intersectedObject.name == 'Object_35' || intersectedObject.name == 'Object_36') {
+                    x.innerHTML = "SunShield";
+                    // x.textContent()
+                    x.style.display = 'block';
+
+                }
+                else if (intersectedObject.name == 'Object_8') {
+                    x.innerHTML = "ISIM";
+
+                    x.style.display = 'block';
+                }
+                else if (intersectedObject.name == 'Object_15') {
+                    x.innerHTML = "Reaction Wheel";
+
+                    x.style.display = 'block';
+                }
+                else if (intersectedObject.name == 'Object_26') {
+                    x.innerHTML = "Secondry Mirror";
+
+                    x.style.display = 'block';
+                }
+                else if (intersectedObject.name == 'Object_38' || intersectedObject.name == 'Object_27' ) {
+                    x.innerHTML = "Solar Panel";
+                    // x.textContent()
+                    x.style.display = 'block';
+
+                }
+                else  if(intersectedObject.name=='Object_4'||intersectedObject.name=='Object_7'){
+        x.innerHTML="Struts";
+        // x.textContent()
+        x.style.display = 'block';
+           
+        }
+                else {
+                    //document.getElementById('primarymirror').style.display = 'none';
+                    x.style.display = 'none';
+
+                }
+            }
+
+        }
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // Smoothly interpolate the rotation
+            if (model) {
+                currentRotationY += (targetRotationY - currentRotationY) * 0.1; // Smoothly adjust the current rotation
+                model.rotation.y = currentRotationY; // Apply the smooth rotation to the model
+            }
+
+            // Smoothly interpolate the camera position
+            currentCameraPositionZ += (targetCameraPositionZ - currentCameraPositionZ) * 0.1;
+            camera.position.z = currentCameraPositionZ; // Apply the smooth camera position
+
+            renderer.render(scene, camera);
+        }
+
+        // Function to update the info box with new content and display it
+        function updateInfoBox(content) {
+            const infoBox = document.getElementById('info-box');
+            infoBox.textContent = content; // Update the text
+            infoBox.classList.add('visible'); // Show the box
+
+            // Hide the box after 3 seconds (or any time you want)
+            setTimeout(() => {
+                infoBox.classList.remove('visible');
+            }, 3000); // 3 seconds delay
+        }
+
+        // Arrow button click events for zooming and showing info
+        document.getElementById('arrow-left').addEventListener('click', () => {
+            if (targetRotationY <= 0.75) {
+                document.getElementById('arrow-left').style.display = 'none';
+            }
+
+            targetCameraPositionZ += 6; // Zoom out (move camera away)
+            targetRotationY -= 0.75; // Target rotation to the left
+
+            // Update the info box with custom content
+            updateInfoBox("You're now viewing the left side of the telescope!");
+
+            console.log(targetRotationY);
+        });
+
+        document.getElementById('arrow-right').addEventListener('click', () => {
+            if (currentRotationY >= 0) {
+                document.getElementById('arrow-left').style.display = 'block';
+            }
+
+            if (targetCameraPositionZ > 8) {
+                targetCameraPositionZ -= 6; // Zoom in (move camera closer)
+                targetRotationY += 0.75; // Target rotation to the right
+            }
+
+            // Update the info box with custom content
+            updateInfoBox("You're now viewing the right side of the telescope!");
+
+            console.log(targetCameraPositionZ);
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        init();
+    </script>
+
+</body>
+
+</html>

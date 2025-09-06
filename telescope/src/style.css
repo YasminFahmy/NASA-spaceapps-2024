@@ -1,0 +1,75 @@
+/* General styling */
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.image-container {
+    font-size: 0;
+}
+
+img {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    margin: 0px auto;
+    padding: 0%;
+}
+
+/* Styling for the container with image 12.jpg */
+.image-12-container {
+    
+    position: relative;
+    text-align: center;
+    margin: px 0;
+    height: 100vh; /* Ensure full-screen height */
+}
+
+/* Styling for the button */
+.centered-button {
+    position: absolute;
+    top: 60%;
+    width: 500px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    transform: translateX(-50%);
+            padding: 30px 55px;
+            font-family: 'Orbitron', sans-serif;
+            /* A space-themed font */
+            color: #fff;
+            background: linear-gradient(45deg, #0f202796, #203a438f, #2c53648a);
+
+            /* Space-like gradient */
+            border: 2px solid rgba(255, 255, 255, 0.479);
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            z-index: 1;
+            /* Ensure it appears above the video */
+            transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.4);
+}
+
+.centered-button:hover {
+    background-color: #0056b3;
+    background: linear-gradient(45deg, #243b55, #141e30, #0f2027);
+            
+            transform: translateX(-50%) scale(1.05);
+            
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.8), 0 0 60px rgba(0, 170, 255, 0.6);
+}
+
+/* Styling for anchor link */
+a {
+    text-decoration: none;
+}
